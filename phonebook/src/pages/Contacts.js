@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import CreateAccount from './CreateAccount';
+import { Navigate } from 'react-router-dom';
 
 
 
 function Contacts() {
     
         const [token, setToken] = useState();
-        if(!token) {
+        if(token) {
             // eslint-disable-next-line no-lone-blocks
-            {return <CreateAccount setToken={setToken} />}
-        } 
+            {return <Navigate to='/' setToken={setToken}/>}
+        } else {
+            <Navigate to='/create-account'  />
+        }
 
     return (
         <div className="">
@@ -28,8 +31,8 @@ function Contacts() {
                 <div className="mb-10 mt-7">
                     <h1 className="text-2xl text-center mt-1 font-medium text-gray-900">Contacts</h1>
                 </div>
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-6 ml-10">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-200">
+                <table className="w-full text-sm text-left text-white dark:text-white mt-6 ml-10 bg-black">
+                    <thead className="text-xs text-white uppercase bg-black dark:bg-gray-900 dark:text-white">
                         <tr>
                             <th scope="col" className="px-6 py-3">Name</th>
                             <th scope="col" className="px-6 py-3">Email</th>
@@ -42,8 +45,8 @@ function Contacts() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="bg-white dark:bg-gray-500 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-600">
-                            <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr className="bg-gray-500 dark:bg-gray-700 dark:border-gray-700  dark:hover:bg-gray-600">
+                            <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-black">
                                 <img className="w-10 h-10 rounded-full" src="" alt="mich"/>
                                 <div className="pl-3">
                                     <div className="text-white text-base font-semibold">Mich</div>
@@ -100,4 +103,5 @@ function Contacts() {
 
     )
 }
+
 export default Contacts;
