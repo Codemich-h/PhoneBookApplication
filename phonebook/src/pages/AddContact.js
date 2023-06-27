@@ -1,7 +1,9 @@
-import { useState } from "react";
-import axios from 'axios';
+import { useState} from "react";
+import { httpCall } from "../api/httpCall";
+
 
 function AddContact () {
+
     const [addContact, setAddContact] = useState({
     name: "",
     phone_number: "",
@@ -10,15 +12,6 @@ function AddContact () {
     email: "",
     job : ""
     });
-
-    const handleInput = (e) => {
-        e.persist();
-        setAddContact({...addContact, [e.target.name]: e.target.value})
-    }
-
-    const userContactDetails = (e) => {
-        e.preventDefault();
-
     const userData = {
         name: addContact.name,
         phone_number: addContact.phone_number ,
@@ -26,16 +19,22 @@ function AddContact () {
         country: addContact.country,
         email: addContact.email,
         job : addContact.job
-        }
-
-        axios.post('http://127.0.0.1:8000/api/v1/add-contact', userData)
-        .then(res => {
-            JSON.res();
-            console.log("Data", res.data.message);
-        })
-        .catch(error => console.log('error', error));
     }
 
+    const handleInput = (e) => {
+        e.persist();
+        setAddContact({...addContact, [e.target.name]: e.target.value})
+    }
+    
+    const userContactDetails = (e) => {
+        e.preventDefault();
+        httpCall().post('add-contact', userData)
+        .then(res => {
+            alert('You have successfully created a contact');
+            console.log("Data:"+ res.data.message);
+        })
+        .catch(error => alert('Error:'+ error.response.data.message));
+    }
 
     return(
         <section className="bg-gray-100 mt-10">

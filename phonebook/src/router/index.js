@@ -1,16 +1,20 @@
 import {Routes, Route} from 'react-router-dom';
 import Contacts from '../pages/Contacts';
-import CreateContact from '../pages/CreateContact';
+import CreateAccount from '../pages/CreateAccount';
 import Login from '../pages/Login';
+import AddContact from '../pages/AddContact';
 
 
 
 function MyRouter() {
+    
     return (
         <Routes>
-            <Route path='/' element={<Contacts />} />
-            <Route path='/create-contact' element={<CreateContact />} />
+            <Route path='/add-contact' element={<AddContact />} />
+            <Route path='/create-account' element={<CreateAccount />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/' element={<Contacts />} />
+            
         </Routes>
     )
 }

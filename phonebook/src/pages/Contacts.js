@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
-import CreateAccount from './CreateAccount';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
 
 
 
 function Contacts() {
-    
-        const [token, setToken] = useState();
-        if(token) {
-            // eslint-disable-next-line no-lone-blocks
-            {return <Navigate to='/' setToken={setToken}/>}
-        } else {
-            <Navigate to='/create-account'  />
-        }
-
     return (
         <div className="">
             <div className='text-black items-center justify-center'>

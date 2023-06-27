@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, {  useState, useEffect } from 'react';
+import React, {  useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,15 +12,6 @@ const [password, setPassword] = useState({
   password: ""
 });
 
-
-const [token, setToken] = useState([])
-    useEffect(() => {
-     JSON.parse(localStorage.getItem('token'))
-     if(token) {
-        setToken(token);
-     }
-    }, [token])
-
 const navigate = useNavigate();
 const userLoginDetail = async (e) => {
   e.preventDefault();
@@ -31,10 +22,8 @@ const userLoginDetail = async (e) => {
   }
   axios.post('http://127.0.0.1:8000/api/v1/create-token', data)
   .then((res)=>{
-    console.log(res.data.message);
-     localStorage.setItem('token', JSON.stringify(res.data.token));
-     JSON.parse(localStorage.getItem('token'))
      console.log('token',res.data.token);
+     localStorage.setItem('token', JSON.stringify(res.data.token))
      alert('You have successfully login');
       navigate('/', {return: true});    
 })
@@ -43,7 +32,6 @@ const userLoginDetail = async (e) => {
     alert("You have not been authorize to login", error);
   })
 }
-
 
     return (
 <section className="bg-white-100 dark:bg-gray-100">

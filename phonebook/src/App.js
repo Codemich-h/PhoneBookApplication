@@ -1,13 +1,12 @@
 import React from 'react';
-import MyRouter from './router/index';
-import Navbar from '../src/navbar/Navbar';
+import Navbar from './navbar/Navbar';
+import MyRouter from '../src/router/index';
 
 
 function App() {
   return (
     <div>
       <Navbar />
-
       <MyRouter />
     </div>
   )
