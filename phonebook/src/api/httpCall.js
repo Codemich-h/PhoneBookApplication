@@ -10,18 +10,14 @@ import axios from 'axios';
 
  export const httpCall = () => {
       let options = {
-        baseURL: 'http://127.0.0.1:8000/api/v1/',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization : "Bearer" + JSON.parse(localStorage.getItem('token'))
-        },    
+        baseURL: 'http://127.0.0.1:8000/api/v1/', 
+        headers: {}   
     }
-    
-
     if (localStorage.getItem('token')) {
         options.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     }
-
     return axios.create(options)
-}
+} 
+
+
 

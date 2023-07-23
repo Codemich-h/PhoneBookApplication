@@ -1,9 +1,11 @@
-import { useState} from "react";
+import { useState } from "react";
 import { httpCall } from "../api/httpCall";
+import {useNavigate} from 'react-router-dom';
 
 
 function AddContact () {
 
+    const navigate = useNavigate()
     const [addContact, setAddContact] = useState({
     name: "",
     phone_number: "",
@@ -12,6 +14,8 @@ function AddContact () {
     email: "",
     job : ""
     });
+
+    
     const userData = {
         name: addContact.name,
         phone_number: addContact.phone_number ,
@@ -32,6 +36,11 @@ function AddContact () {
         .then(res => {
             alert('You have successfully created a contact');
             console.log("Data:"+ res.data.message);
+            if(res) {
+                navigate('/');
+            } else {
+                navigate('/add-contact');
+            }
         })
         .catch(error => alert('Error:'+ error.response.data.message));
     }

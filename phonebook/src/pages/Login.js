@@ -23,7 +23,7 @@ const userLoginDetail = async (e) => {
   axios.post('http://127.0.0.1:8000/api/v1/create-token', data)
   .then((res)=>{
      console.log('token',res.data.token);
-     localStorage.setItem('token', JSON.stringify(res.data.token))
+     localStorage.setItem('token', res.data.token)
      alert('You have successfully login');
       navigate('/', {return: true});    
 })

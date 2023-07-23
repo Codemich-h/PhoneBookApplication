@@ -3,6 +3,7 @@ import Contacts from '../pages/Contacts';
 import CreateAccount from '../pages/CreateAccount';
 import Login from '../pages/Login';
 import AddContact from '../pages/AddContact';
+import UpdateContact from '../pages/UpdateContact';
 
 
 
@@ -14,6 +15,7 @@ function MyRouter() {
             <Route path='/create-account' element={<CreateAccount />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Contacts />} />
+            <Route path="update-contact/:id" element={<UpdateContact />} />
             
         </Routes>
     )

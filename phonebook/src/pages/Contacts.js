@@ -1,8 +1,81 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { httpCall } from '../api/httpCall';
+import { Link } from 'react-router-dom';
 
 
 
 function Contacts() {
+    const [data, setData] =  useState([]); 
+
+    const contactInfo = () => {
+        httpCall().get('get-contacts')
+        .then(res => {
+            setData(res.data.data);
+            console.log(res.data);
+        })
+        .catch((error) => {
+            console.log("Error: " + error);
+        })
+    }
+
+    useEffect(() => {
+        contactInfo();
+    }, []);
+
+    var contactDetails = "";
+    contactDetails = data.map((item, index) => {
+        return (
+            <tr key={index} className="bg-gray-500 dark:bg-gray-700 dark:border-gray-700  dark:hover:bg-gray-300">
+                
+                            <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-black">
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.name}</div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.email}</div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.phone_number}</div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.relationship}</div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.job}</div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-white text-base font-semibold">{item.country}</div>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-base font-semibold">
+                                        <Link to={`/update-contact/${item.id}`} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</Link>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="pl-3">
+                                    <div className="text-base font-semibold">
+                                        <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                    </div>
+                                </div>
+                            </th>
+            </tr>
+            )
+    });
     return (
         <div className="">
             <div className='text-black items-center justify-center'>
@@ -33,54 +106,9 @@ function Contacts() {
                             <th scope="col" className="px-6 py-3 ml-3">Delete</th>
                         </tr>
                     </thead>
+                      {contactDetails}
                     <tbody>
-                        <tr className="bg-gray-500 dark:bg-gray-700 dark:border-gray-700  dark:hover:bg-gray-600">
-                            <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-black">
-                                <img className="w-10 h-10 rounded-full" src="" alt="mich"/>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">Mich</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">info@omo.com</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">0774343333443</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">Brother</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">Frontend Dev</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-white text-base font-semibold">Liberia</div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-base font-semibold">
-                                        <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="pl-3">
-                                    <div className="text-base font-semibold">
-                                        <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
