@@ -15,7 +15,7 @@ function MyRouter() {
             <Route path='/create-account' element={<CreateAccount />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Contacts />} />
-            <Route path="update-contact/:id" element={<UpdateContact />} />
+            <Route path='update-contact/:id' element={<UpdateContact />} />
             
         </Routes>
     )

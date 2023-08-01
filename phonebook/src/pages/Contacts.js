@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { httpCall } from '../api/httpCall';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Contacts() {
+    const {id} = useParams();
+    const navigate = useNavigate();
     const [data, setData] =  useState([]); 
 
     const contactInfo = () => {
@@ -17,6 +22,25 @@ function Contacts() {
         .catch((error) => {
             console.log("Error: " + error);
         })
+    }
+
+    //Deleting data from our contact list 
+    const handleDelete = (id) => {
+        const confirm = window.confirm("Do you want to delete this contact!")
+        if(confirm) {
+            httpCall().delete(`delete-contact/${id}`)
+            .then(res => {
+                alert(res.data.message);
+                if(res.data.message) {
+                    navigate('/')
+                } else {
+                    navigate('/', {return: true})
+                }
+            })
+            .catch(error => {
+                console.log('Error: ' + error)
+            })
+        }
     }
 
     useEffect(() => {
@@ -69,7 +93,7 @@ function Contacts() {
                             <th>
                                 <div className="pl-3">
                                     <div className="text-base font-semibold">
-                                        <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                        <button onClick={(e) => handleDelete(item.id)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
                                     </div>
                                 </div>
                             </th>
@@ -117,8 +141,7 @@ function Contacts() {
             </div>
         </div>
     </div>
-
-     
+    
 </div>
 
     )

@@ -28,6 +28,7 @@ function UpdateContact () {
     const handleData = (e) => {
         setData({...data, [e.target.name]: e.target.value})
     }
+    //Updating of user contact
     const submitData = (e) => {
         e.preventDefault();
         httpCall().put(`update-contact/${id}`, getData) 
@@ -42,7 +43,7 @@ function UpdateContact () {
             console.log("Error:" + error)
         })   
     }
-   
+   // Calling Contact data to the form for Editing 
     useEffect(() => {  
         // eslint-disable-next-line no-restricted-globals, no-undef
         httpCall().get(`http://127.0.0.1:8000/api/v1/get-contact/${id}`, {getData})
@@ -55,6 +56,7 @@ function UpdateContact () {
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     return <section className="bg-gray-100 mt-10">
 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
