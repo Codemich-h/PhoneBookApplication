@@ -4,6 +4,8 @@ import CreateAccount from '../pages/CreateAccount';
 import Login from '../pages/Login';
 import AddContact from '../pages/AddContact';
 import UpdateContact from '../pages/UpdateContact';
+import UserProfile from '../pages/UserProfile';
+import ForgetPassword from '../pages/ForgetPassword';
 
 
 
@@ -16,7 +18,8 @@ function MyRouter() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Contacts />} />
             <Route path='update-contact/:id' element={<UpdateContact />} />
-            
+            <Route path='/user-profile' element={<UserProfile />}></Route>
+            <Route path='/forget-password' element={<ForgetPassword />}></Route>
         </Routes>
     )
 }

@@ -12,7 +12,10 @@ function Contacts() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [data, setData] =  useState([]); 
+    const [search, setSearch] = useState('');
 
+
+    //Calling data from our api  
     const contactInfo = () => {
         httpCall().get('get-contacts')
         .then(res => {
@@ -47,11 +50,28 @@ function Contacts() {
         contactInfo();
     }, []);
 
+    //Searching data from our api 
+    const searchContact = () => {
+        httpCall().post('search-contacts')
+        .then(res => {
+            res.json();
+        })
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(error => {
+            alert("Error: " + error);
+        })
+    }   
+
+    useEffect(() => {
+        searchContact();
+    }, [])
+
     var contactDetails = "";
     contactDetails = data.map((item, index) => {
         return (
             <tr key={index} className="bg-gray-500 dark:bg-gray-700 dark:border-gray-700  dark:hover:bg-gray-300">
-                
                             <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-black">
                                 <div className="pl-3">
                                     <div className="text-white text-base font-semibold">{item.name}</div>
@@ -100,20 +120,20 @@ function Contacts() {
             </tr>
             )
     });
+    
     return (
         <div className="">
             <div className='text-black items-center justify-center'>
                <p className='text-2xl text-center mt-36 font-medium text-gray-900 dark:text-white-900'>User PhoneBook</p>
             </div>
-            <div className="relative ml-36 mt-20">
-                <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-                <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>   
+            <div className="relative ml-36 mt-20 items-center justify-center px-5 py-5">
+            <div className="pt-2 relative mx-auto text-gray-600">
+                <div className="relative mt-1overflow-hidden resize-x min-w-80 max-w-3xl">
+                      <input type="search" name="search contact"  onChange={(e) => setSearch(e.target.value)} id="search" className="w-full mb-1.5 mr-3 pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-gray-500 transition-colors" placeholder="Search..." />
+                    <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-gray-700 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-300">Search</button>
+                </div>
             </div>
-            <div class="pt-2 relative mx-auto text-gray-600">
-                <input class="border-2 border-gray-300 bg-white  h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" type="search" name="search" placeholder="Search" />
-            
         </div>
-        </div> 
     <div className="mt-2 mr-16 flex flex-col">
         <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -140,8 +160,7 @@ function Contacts() {
                 </table>
             </div>
         </div>
-    </div>
-    
+    </div> 
 </div>
 
     )
