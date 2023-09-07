@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, {  useState } from 'react';
-import axios from 'axios';
+import { httpCall } from '../api/httpCall';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -21,17 +21,17 @@ const userLoginDetail = async (e) => {
     email: email,
     password: password
   }
-  axios.post('http://127.0.0.1:8000/api/v1/create-token', data)
+  
+  httpCall().post('http://127.0.0.1:8000/api/v1/create-token', data)
   .then((res)=>{
      console.log('token',res.data.token);
      localStorage.setItem('token', res.data.token)
-     alert('You have successfully login');
-      navigate('/', {return: true});    
+     alert(res.data.message);
+      navigate('/', {return: true});
 })
   .catch(error => {
-    console.log('errors', error);
-    alert("You have not been authorize to login", error);
-  })
+    alert(error);
+  });
 }
 
     return (
@@ -46,11 +46,11 @@ const userLoginDetail = async (e) => {
                   <div>
                       <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
                       <input type="email" onChange={(e) => setEmail(e.target.value
-                        )}  name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100" placeholder="name@company.com" required=""></input>
+                        )}  name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900" placeholder="name@company.com" required=""></input>
                   </div>
                   <div>
                       <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                      <input type="password" onChange={(e) => setPassword(e.target.value)} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100" required=""></input>
+                      <input type="password" onChange={(e) => setPassword(e.target.value)} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900" required=""></input>
                   </div>
                   <div className="flex items-center justify-between">
                       <div className="flex items-start">

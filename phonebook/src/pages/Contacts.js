@@ -5,6 +5,8 @@ import { httpCall } from '../api/httpCall';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import { MenuItems } from './MenuItems';
 
 
 
@@ -12,7 +14,7 @@ function Contacts() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [data, setData] =  useState([]); 
-    const [search, setSearch] = useState('');
+    const [value, setValue] = useState("");
 
 
     //Calling data from our api  
@@ -35,7 +37,7 @@ function Contacts() {
             .then(res => {
                 alert(res.data.message);
                 if(res.data.message) {
-                    navigate('/')
+                    navigate('/', {return: true})
                 } else {
                     navigate('/', {return: true})
                 }
@@ -50,26 +52,27 @@ function Contacts() {
         contactInfo();
     }, []);
 
-    //Searching data from our api 
-    const searchContact = () => {
+    //Searching data from our api and display that data that has been searched
+    const changeData = (e) => {
+        setValue(e.target.value);
+    }
+    const SearchData = (res) => {
         httpCall().post('search-contacts')
         .then(res => {
-            res.json();
-        })
-        .then(res => {
-            console.log(res.data)
+            console.log('Search',res)
         })
         .catch(error => {
             alert("Error: " + error);
         })
-    }   
-
-    useEffect(() => {
-        searchContact();
-    }, [])
-
+    }
+    
     var contactDetails = "";
-    contactDetails = data.map((item, index) => {
+    contactDetails = data.filter(item => {
+        const response = value.toLowerCase();
+        const contactName = item.name.toLowerCase();
+
+        return contactName.startsWith(response);
+    }).map((item, index) => {
         return (
             <tr key={index} className="bg-gray-500 dark:bg-gray-700 dark:border-gray-700  dark:hover:bg-gray-300">
                             <th scope="row" className="flex items-center px-3 py-4 text-gray-900 whitespace-nowrap dark:text-black">
@@ -129,8 +132,10 @@ function Contacts() {
             <div className="relative ml-36 mt-20 items-center justify-center px-5 py-5">
             <div className="pt-2 relative mx-auto text-gray-600">
                 <div className="relative mt-1overflow-hidden resize-x min-w-80 max-w-3xl">
-                      <input type="search" name="search contact"  onChange={(e) => setSearch(e.target.value)} id="search" className="w-full mb-1.5 mr-3 pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-gray-500 transition-colors" placeholder="Search..." />
-                    <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-gray-700 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-300">Search</button>
+                      <input type="search" name="search contact"  onChange={changeData} id="search" className="w-full mt-3 mr-3 pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-gray-500 transition-colors" placeholder="Search..." />
+                      <div type="submit" className="text-black absolute right-2.5 bottom-0.5 focus:ring-4 focus:outline-none focus:ring-gray-900 font-medium rounded-lg text-sm px- py-2">
+                    </div>
+                    <button type="submit" onClick={(e) => SearchData(value)} className="text-white absolute right-2.5 bottom-1 bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-900 dark:focus:ring-gray-300">Search</button>
                 </div>
             </div>
         </div>
