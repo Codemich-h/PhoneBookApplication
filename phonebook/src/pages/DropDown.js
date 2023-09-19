@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { MenuItems } from "./MenuItems";
+import Contacts from "./Contacts"
 import { useNavigate } from 'react-router-dom';
 
 const DropDown = () => {
@@ -11,10 +12,12 @@ const DropDown = () => {
 
   // Logout function 
   const logOut = () => {
-    let tokenReMove = (localStorage.removeItem('token') )
-  if(MenuItems.title.url && tokenReMove) {
+    let tokenReMove = (localStorage.removeItem('token'))
+  if(MenuItems.title.url && tokenReMove === true){ 
     return navigate('/login');
-  } 
+  } else {
+    return <Contacts path="/" />
+  }
 }
 
   return (

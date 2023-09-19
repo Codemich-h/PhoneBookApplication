@@ -25,9 +25,11 @@ const userLoginDetail = async (e) => {
   httpCall().post('http://127.0.0.1:8000/api/v1/create-token', data)
   .then((res)=>{
      console.log('token',res.data.token);
-     localStorage.setItem('token', res.data.token)
-     alert(res.data.message);
-      navigate('/', {return: true});
+     localStorage.setItem('token', res.data.token);
+     if(data) {
+      alert(res.data.message)
+     }
+      navigate('/add-contact', {return: true});
 })
   .catch(error => {
     alert(error);

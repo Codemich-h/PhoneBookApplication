@@ -1,6 +1,7 @@
 import React from 'react'
 
 function ResetPassword() {
+  
   return (
         <div>
         <form  className="space-y-4 md:space-y-6" action="#">

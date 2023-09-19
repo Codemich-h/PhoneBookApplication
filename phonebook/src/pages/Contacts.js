@@ -5,8 +5,6 @@ import { httpCall } from '../api/httpCall';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
-import { MenuItems } from './MenuItems';
 
 
 
